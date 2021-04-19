@@ -20,6 +20,44 @@
 digits[i] 是范围 ['2', '9'] 的一个数字。
 
 * */
-export default (str) => {
+/**
+ * @param {string} digits
+ * @return {string[]}
+ */
+var letterCombinations = function (digits) {
+  if(digits.length<1){
+    return [];
+  }
+  let mapObj = {
+    '2': ['a', 'b', 'c'],
+    '3': ['d', 'e', 'f'],
+    '4': ['g', 'h', 'i'],
+    '5': ['j', 'k', 'l'],
+    '6': ['m', 'n', 'o'],
+    '7': ['p', 'q', 'r', 's'],
+    '8': ['t', 'u', 'v'],
+    '9': ['w', 'x', 'y', 'z']
+  }
 
+  let letterArr = digits.split('').map((item)=>{
+    return mapObj[item]
+  })
+
+  function getArr (letterArr) {
+    if (letterArr.length > 1) {
+      let arr = [];
+      for (let i=0;i<letterArr[0].length;i++){
+        for (let j=0;j<letterArr[1].length;j++){
+          arr.push(letterArr[0][i]+letterArr[1][j])
+        }
+      }
+      letterArr.splice(0,2,arr);
+      return getArr(letterArr)
+    } else {
+      return letterArr[0]
+    }
+  }
+  return getArr(letterArr)
 }
+
+letterCombinations('23')
